@@ -1,5 +1,5 @@
 # ESP8266-Line-Following-Robot
-# Line Following Robot using ESP8266 (NodeMCU-V3).
+# Line Following Robot using ESP8266 (NodeMCU-V3) Implementing PID.
 
 So in this project we are using below main components
 
