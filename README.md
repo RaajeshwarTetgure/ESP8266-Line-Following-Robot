@@ -15,3 +15,5 @@ So in this project we are using below main components
 
 •	2 - 3.7V Li-ion Cells
 
+
+![Image-1](https://github.com/RaajeshwarTetgure/ESP8266-Line-Following-Robot/assets/106911654/dbbe2972-fe4d-4707-8550-4e2f84fd2963)
