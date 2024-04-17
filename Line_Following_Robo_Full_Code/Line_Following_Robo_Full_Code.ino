@@ -50,6 +50,7 @@
 
   const uint16_t basespeedA = 150;
   const uint16_t basespeedB = 150;
+  volatile uint16_t flag_on_line = RESET;                           // Static variable to retain flag value
 
 
 // Motor A connections
@@ -130,7 +131,15 @@
     rightMotorPWM(basespeedB - motor_feed);
 
     lastError = error;                                                  // Update last error
-  }
+  
+    
+    static char flag_on_line = RESET;                                   // Static variable to retain flag value
+    for(int i = 0; i < NUM_SENSORS; i++) {
+        if(calibratedSensorsValues[i] < THRESHOLD) {
+            flag_on_line = SET;
+        }
+    }
+   } 
 
 
 /*****************************       Sensor Section        ****************************************/
@@ -241,8 +250,18 @@
     }
   }
 
+
+  void online(void) {
+    for(int i = 0; i < NUM_SENSORS; i++) {
+        if(calibratedSensorsValues[i] < THRESHOLD) {
+            flag_on_line = SET;
+        }
+    }
+  }
+
   int getLineError(void) {
     getCalibratedSensorsADC();
+    online();
 
     int errorValue = (int)((calibratedSensorsValues[0]*2) + 
                            (calibratedSensorsValues[1]*1) + 
@@ -251,7 +270,17 @@
                            (calibratedSensorsValues[4]*2));
 
     return errorValue;
+
+    if (flag_on_line){
+      errorValue = errorValue;
+    }
+    else{
+      errorValue = lastError;
+    }
+
+    return errorValue;
 }
+
 
 
   //****************************      MULTIPLEXER SECTION      ********************************//
